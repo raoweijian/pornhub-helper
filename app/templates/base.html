@@ -1,0 +1,35 @@
+{% block head %}
+<link rel="shortcut icon" href="{{ url_for('static', filename = 'favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename = 'favicon.ico') }}" type="image/x-icon">
+
+<!-- jquery -->
+<script src="/static/jquery/jquery.slim.min.js"></script>
+<script src="/static/jquery/popper.min.js"></script>
+
+<!-- bootstrap -->
+<link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
+<script src="/static/bootstrap/bootstrap.min.js"></script>
+
+<!-- axios -->
+<script src="/static/axios/axios.min.js"></script>
+
+<!-- vue -->
+<script src="/static/vue/vue.js"></script>
+
+<!-- element -->
+<link rel="stylesheet" href="/static/element/index.css">
+<script src="/static/element/index.js"></script>
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">HOME</a>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+{% endblock %}

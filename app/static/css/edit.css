@@ -1,0 +1,59 @@
+#mdeditor {
+    width: 100%;
+    height: 100%;
+    border: 1px;
+    overflow: auto;
+    word-break: break-all;
+}
+
+#editor-column, #preview-column {
+    margin: 5px;
+    width: 47%;
+    height: 100%;
+}
+
+#editor-column {
+    float: left;
+}
+
+#preview-column {
+    float: right;
+}
+
+html {
+    height: 80%;
+}
+
+body, #container, #preview{
+    height: 100%;
+}
+
+#mdeditor{
+    border: 1px solid;
+}
+
+#preview {
+    background: rgb(246, 246, 246);
+    overflow-y: scroll;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 30px;
+}
+
+h3, h4, h5, h6{
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+h4{
+    font-size: 15px;
+}
+
+img {
+    margin: 10px;
+}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="/static/showdown/github-markdown.css">
+<link rel="stylesheet" href="/static/css/edit.css">
+<script src='/static/showdown/showdown.min.js'></script>
+<script src='/static/js/paste.js'></script>
+<script src='/static/js/edit.js'></script>
+
+{% include 'highlight.html' %}
+{% endblock %}
+
+{% block content %}
+<div id='container'>
+    <!-- 标题和提交按钮 -->
+    <ul>
+        <div class="col-lg-4">
+            <input type="text" class="form-control" placeholder="文章标题" id="title" v-model="title"></input>
+        </div>
+        <div class="col-lg-4">
+            <a class="btn btn-danger btn-lg" id="button_publish" @click="publish">发表</a>
+        </div>
+    </ul>
+
+    <!--编辑区-->
+    <div id='editor-column'>
+        <textarea id="mdeditor" :value="content" @keydown.enter="enter" @keydown.tab="tab" @input="update" @paste="pasteImage" @scroll="syncScroll">
+        </textarea>
+    </div>
+
+    <!-- 预览区 -->
+    <div id='preview-column'>
+        <div id="preview" v-html="mdContent"></div>
+    </div>
+</div>
+{% endblock %}

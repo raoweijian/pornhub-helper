@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" id="container">
+    <el-form :model="login_info.data" :rules="login_info.rules" ref="login_info.data" label-width="180px" class="demo-ruleForm" size="small">
+        <el-form-item label="用户名" prop="value">
+            <el-input v-model="login_info.data.username"></el-input>
+        </el-form-item>
+
+        <el-form-item label="密码" prop="method">
+            <el-input type="password" v-model="login_info.data.password"></el-input>
+        </el-form-item>
+
+        <el-form-item>
+            <el-button type="primary" @click="login('login_info.data')">确定</el-button>
+        </el-form-item>
+    </el-form>
+</div>
+
+<script src="/static/js/login.js"></script>
+{% endblock %}
