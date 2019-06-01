@@ -20,6 +20,9 @@ class TaskListApi(Resource):
         return tasks
 
     def post(self):
+        if Task.query.filter_by(url=request.json["url"]).first():
+            return "this url is already in task"
+
         task = Task()
         task.status = 0
         task.url = request.json["url"]

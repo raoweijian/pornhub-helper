@@ -7,7 +7,7 @@ import urllib
 from celery import Celery
 from lxml import etree
 
-from . import flask_app
+from . import flask_app, db
 from .models import Task
 
 
@@ -41,12 +41,14 @@ def download_video(task_id, path):
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36',
     }
 
-    print("start download url: %s" % task.url)
     s = requests.Session()
     resp = s.get(task.url, headers=headers)
-    print("get html done")
     html = etree.HTML(resp.content)
     title = ''.join(html.xpath('//h1//text()')).strip()
+    task.title = title
+    db.session.add(task)
+    db.session.commit()
+
 
     js = html.xpath('//*[@id="player"]/script/text()')[0]
     tem = re.findall('var\\s+\\w+\\s+=\\s+(.*);\\s+var player_mp4_seek', js)[-1]
@@ -59,8 +61,12 @@ def download_video(task_id, path):
                 task.status = 2
                 break
             except Exception:
+                print("download exception")
                 task.status = -1
                 pass
+
+    db.session.add(task)
+    db.session.commit()
 
 
 def download(path, url, name, filetype):
