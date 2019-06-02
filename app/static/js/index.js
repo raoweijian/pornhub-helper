@@ -45,6 +45,7 @@ let app = new Vue({
          */
         onSubmit: function(){
             axios.post("/api/tasks/", this.form).then((response) => {
+                this.form.url = "";
                 this.getTasks();
             });
         },
