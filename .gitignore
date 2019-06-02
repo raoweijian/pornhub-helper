@@ -1,0 +1,6 @@
+*out
+__pycache__/
+download/
+sqlite.dev.db
+uwsgi/
+venv/
