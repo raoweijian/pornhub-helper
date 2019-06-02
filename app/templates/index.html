@@ -13,7 +13,7 @@
     </el-form>
 
     <el-table :data="tasks">
-        <el-table-column label="标题" width="700">
+        <el-table-column label="标题" width="600">
             <template slot-scope="scope">
                 <a :href="scope.row.url">[[ scope.row.title ]]</a>
             </template>
@@ -28,7 +28,18 @@
             </template>
         </el-table-column>
 
+        <el-table-column label="确认" width="100">
+            <template slot-scope="scope">
+                <el-button v-if="scope.row.status == '下载完成'" type="success"
+                    icon="el-icon-check" circle @click="check(scope.row.id)"></el-button>
+            </template>
+        </el-table-column>
     </el-table>
+
+    <el-pagination background
+        layout="prev, pager, next" :total="taskCount" :page-size="pageSize"
+        @current-change="pageSwitch">
+    </el-pagination>
 </div>
 
 <script src="/static/js/index.js"></script>

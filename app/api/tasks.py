@@ -1,4 +1,5 @@
 from flask_restful import Resource, request
+from sqlalchemy.sql import func
 
 from ..models import Task
 from . import api
@@ -11,13 +12,29 @@ class TaskApi(Resource):
         task = Task.query.get(task_id)
         return task.to_json()
 
+    def put(self, task_id):
+        task = Task.query.get(task_id)
+        task.from_json(request.json)
+        db.session.add(task)
+        db.session.commit()
+        return task.to_json()
+
 
 class TaskListApi(Resource):
+    page_size = 10
+
     def get(self):
-        tasks = Task.query.all()
-        for i in range(len(tasks)):
-            tasks[i] = tasks[i].to_json()
-        return tasks
+        page = int(request.args.get('page', 1))
+        offset = (page - 1) * self.page_size
+
+        tasks = Task.query.filter(Task.status >= 0).limit(self.page_size).offset(offset).all()
+        ret = {
+            "data": [task.to_json() for task in tasks],
+            "cur_page": page,
+            "page_size": self.page_size,
+            "task_count": self._get_task_count(),
+        }
+        return ret
 
     def post(self):
         if Task.query.filter_by(url=request.json["url"]).first():
@@ -34,6 +51,12 @@ class TaskListApi(Resource):
 
         return "ok"
 
+    def _get_task_count(self):
+        q = db.session.query(Task).filter(Task.status >= 0)
+        count_q = q.statement.with_only_columns([func.count()])
+        count = q.session.execute(count_q).scalar()
+        return count
 
-api.add_resource(TaskApi, '/tasks/<int:article_id>', endpoint='task')
+
+api.add_resource(TaskApi, '/tasks/<int:task_id>', endpoint='task')
 api.add_resource(TaskListApi, '/tasks/', endpoint='tasks')

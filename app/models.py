@@ -29,11 +29,15 @@ class Task(db.Model):
         }
         return ret
 
+    def from_json(self, data):
+        self.status = data["status"]
+
     def _status_desc(self, status):
         mapper = {
             0: "等待下载",
             1: "下载中",
             2: "下载完成",
             -1: "下载失败",
+            -2: "已存储",
         }
         return mapper[status]
