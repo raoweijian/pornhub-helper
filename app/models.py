@@ -21,7 +21,7 @@ class Task(db.Model):
         ret = {
             "id": self.id,
             "url": self.url,
-            "download_url": "http://www.raoweijian.top:8081/%s.mp4" % self.title,
+            "download_url": "/download/%s.mp4" % self.title,
             "title": self.title,
             "status": self._status_desc(self.status),
             "create_time": self.create_time.strftime("%Y-%m-%d %H:%M:%S"),
