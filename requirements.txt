@@ -27,7 +27,7 @@ loguru==0.2.5
 lxml==4.6.5
 Mako==1.0.9
 MarkupSafe==1.1.1
-Pygments==2.4.0
+Pygments==2.7.4
 pyjsparser==2.7.1
 PySocks==1.7.1
 python-dateutil==2.8.0
